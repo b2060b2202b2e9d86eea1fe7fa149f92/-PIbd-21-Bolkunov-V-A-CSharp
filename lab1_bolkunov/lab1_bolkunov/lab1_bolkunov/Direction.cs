@@ -8,6 +8,9 @@ namespace lab1_bolkunov
 {
 	public enum Direction:byte
 	{
-		Up, Down, Left, Right
+		Up = 1, 
+		Down = 2, 
+		Left = 4, 
+		Right = 8
 	}
 }

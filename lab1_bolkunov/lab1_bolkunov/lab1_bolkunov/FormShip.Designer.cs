@@ -34,6 +34,7 @@
 			this.downButton = new System.Windows.Forms.Button();
 			this.leftButton = new System.Windows.Forms.Button();
 			this.shipPictureBox = new System.Windows.Forms.PictureBox();
+			this.button1 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.shipPictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -44,7 +45,7 @@
 			this.createShipButton.Name = "createShipButton";
 			this.createShipButton.Size = new System.Drawing.Size(120, 30);
 			this.createShipButton.TabIndex = 1;
-			this.createShipButton.Text = "Создать теплоход";
+			this.createShipButton.Text = "Создать корабль";
 			this.createShipButton.UseVisualStyleBackColor = true;
 			this.createShipButton.Click += new System.EventHandler(this.createShipButton_Click);
 			// 
@@ -103,17 +104,28 @@
 			// shipPictureBox
 			// 
 			this.shipPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.shipPictureBox.Location = new System.Drawing.Point(0, 1);
+			this.shipPictureBox.Location = new System.Drawing.Point(0, 0);
 			this.shipPictureBox.Name = "shipPictureBox";
 			this.shipPictureBox.Size = new System.Drawing.Size(1184, 761);
 			this.shipPictureBox.TabIndex = 0;
 			this.shipPictureBox.TabStop = false;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(148, 9);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(118, 31);
+			this.button1.TabIndex = 6;
+			this.button1.Text = "Создать теплоход";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.createMotorShipButton_Click);
 			// 
 			// FormShip
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1184, 761);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.upButton);
 			this.Controls.Add(this.rightButton);
 			this.Controls.Add(this.downButton);
@@ -136,6 +148,7 @@
 		private System.Windows.Forms.Button downButton;
 		private System.Windows.Forms.Button rightButton;
 		private System.Windows.Forms.Button upButton;
+		private System.Windows.Forms.Button button1;
 	}
 }
 

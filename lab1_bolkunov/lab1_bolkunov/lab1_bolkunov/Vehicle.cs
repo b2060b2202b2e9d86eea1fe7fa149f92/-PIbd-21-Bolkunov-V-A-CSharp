@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lab2_bolkunov
+namespace lab1_bolkunov
 {
 	public abstract class Vehicle:ITransport
 	{
