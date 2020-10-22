@@ -16,7 +16,7 @@ namespace lab1_bolkunov
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormShip());
+			Application.Run(new FormPier());
 		}
 	}
 }

@@ -47,6 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Direction.cs" />
+    <Compile Include="FormPier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPier.Designer.cs">
+      <DependentUpon>FormPier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pier.cs" />
     <Compile Include="FormShip.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +66,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Vehicle.cs" />
+    <EmbeddedResource Include="FormPier.resx">
+      <DependentUpon>FormPier.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormShip.resx">
       <DependentUpon>FormShip.cs</DependentUpon>
     </EmbeddedResource>
