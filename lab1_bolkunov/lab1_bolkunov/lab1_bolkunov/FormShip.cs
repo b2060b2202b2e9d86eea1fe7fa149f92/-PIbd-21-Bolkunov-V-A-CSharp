@@ -19,7 +19,13 @@ namespace lab1_bolkunov
 			InitializeComponent();
 		}
 
-		private void Draw()
+        public void SetShip(ITransport ship)
+        {
+            this.transport = ship;
+            Draw();
+        }
+
+        private void Draw()
 		{
 			if (transport != null)
 			{
