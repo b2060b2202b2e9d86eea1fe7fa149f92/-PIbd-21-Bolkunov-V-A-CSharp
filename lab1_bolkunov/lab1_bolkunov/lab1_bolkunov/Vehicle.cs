@@ -30,5 +30,10 @@ namespace lab1_bolkunov
 			pictureWidth = width;
 			pictureHeight = height;
 		}
+
+		public void SetMainColor(Color color)
+		{
+			MainColor = color;
+		}
 	}
 }

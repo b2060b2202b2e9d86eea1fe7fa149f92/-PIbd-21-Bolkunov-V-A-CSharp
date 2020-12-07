@@ -53,6 +53,12 @@
     <Compile Include="FormPier.Designer.cs">
       <DependentUpon>FormPier.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormShipConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormShipConfig.Designer.cs">
+      <DependentUpon>FormShipConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="PierCollection.cs" />
     <Compile Include="Pier.cs" />
     <Compile Include="FormShip.cs">
@@ -72,6 +78,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormShip.resx">
       <DependentUpon>FormShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormShipConfig.resx">
+      <DependentUpon>FormShipConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

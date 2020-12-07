@@ -40,14 +40,6 @@ namespace lab1_bolkunov
             }
         }
 
-        public void RemovePierAt(int index)
-        {
-            if(index >= 0 && index < piers.Count)
-            {
-                piers.Remove(Keys[index]);
-            }
-        }
-
         public Pier<Vehicle> this[string id]
         {
             get

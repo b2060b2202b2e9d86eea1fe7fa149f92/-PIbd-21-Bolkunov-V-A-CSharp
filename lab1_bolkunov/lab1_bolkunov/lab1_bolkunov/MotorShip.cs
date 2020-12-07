@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace lab1_bolkunov
 {
-	class MotorShip: Ship
+	public class MotorShip : Ship
 	{
 		public Color AdditionalColor { private set; get; }
 
@@ -32,6 +32,11 @@ namespace lab1_bolkunov
 			Random rnd = new Random();
 			pipeCount = rnd.Next(2, 6);
 			pipeRadius = rnd.Next(12, 16);
+		}
+
+		public void SetAdditionalColor(Color color)
+		{
+			AdditionalColor = color;
 		}
 
 		public override void DrawTransport(Graphics g)

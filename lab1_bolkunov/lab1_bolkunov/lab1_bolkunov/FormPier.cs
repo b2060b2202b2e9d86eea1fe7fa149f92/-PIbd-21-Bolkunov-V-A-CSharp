@@ -138,5 +138,27 @@ namespace lab1_bolkunov
         {
             Draw();
         }
+
+        private void createShipButton_Click(object sender, EventArgs e)
+        {
+            var formShipConfig = new FormShipConfig();
+            formShipConfig.AddEvent(AddShip);
+            formShipConfig.Show();
+        }
+
+        private void AddShip(Ship ship)
+        {
+            if (ship != null && piersListBox.SelectedIndex > -1)
+            {
+                if (pierCollection[piersListBox.SelectedItem.ToString()] + ship)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Пристань переполнена");
+                }
+            }
+        }
     }
 }

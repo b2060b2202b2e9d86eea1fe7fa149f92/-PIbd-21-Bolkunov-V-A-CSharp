@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace lab1_bolkunov
 {
-	class Ship: Vehicle
+	public class Ship: Vehicle
 	{
 		protected readonly int shipWidth = 50;
 		protected readonly int shipHeight = 120;
