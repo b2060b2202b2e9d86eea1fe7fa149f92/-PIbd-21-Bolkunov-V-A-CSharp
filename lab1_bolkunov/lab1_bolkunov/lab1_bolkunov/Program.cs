@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace lab1_bolkunov
 {
+
 	static class Program
 	{
 		/// <summary>

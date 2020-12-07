@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace lab1_bolkunov
 {
-	class Ship: Vehicle
+	public class Ship: Vehicle
 	{
 		protected readonly int shipWidth = 50;
 		protected readonly int shipHeight = 120;
@@ -68,11 +68,14 @@ namespace lab1_bolkunov
 		public override void DrawTransport(Graphics g)
 		{
 			Pen blackPen = new Pen(Color.Black);
+			//Pen additionlPen = new Pen(AdditionalColor);
 			Pen mainPen = new Pen(MainColor);
 			blackPen.Width = 10;
+			//additionlPen.Width = 10;
 			mainPen.Width = 5;
 
 			Brush mainBrush = new SolidBrush(MainColor);
+			//Brush additionalBrush = new SolidBrush(AdditionalColor);
 			Brush blackBrush = new SolidBrush(Color.Black);
 			Brush smokeBrush = new SolidBrush(Color.DarkGray);
 			Brush brownBrush = new SolidBrush(Color.SaddleBrown);
