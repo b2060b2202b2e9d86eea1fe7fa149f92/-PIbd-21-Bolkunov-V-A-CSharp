@@ -41,8 +41,15 @@
 			this.piersListBox = new System.Windows.Forms.ListBox();
 			this.removePierButton = new System.Windows.Forms.Button();
 			this.createShipButton = new System.Windows.Forms.Button();
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
+			this.loadFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.pierPictureBox)).BeginInit();
 			this.takeShipGroupBox.SuspendLayout();
+			this.menuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// parkShipButton
@@ -59,9 +66,9 @@
 			// pierPictureBox
 			// 
 			this.pierPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.pierPictureBox.Location = new System.Drawing.Point(0, 0);
+			this.pierPictureBox.Location = new System.Drawing.Point(0, 27);
 			this.pierPictureBox.Name = "pierPictureBox";
-			this.pierPictureBox.Size = new System.Drawing.Size(1113, 761);
+			this.pierPictureBox.Size = new System.Drawing.Size(1113, 734);
 			this.pierPictureBox.TabIndex = 1;
 			this.pierPictureBox.TabStop = false;
 			// 
@@ -120,7 +127,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(1173, 9);
+			this.label1.Location = new System.Drawing.Point(1173, 28);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(59, 13);
 			this.label1.TabIndex = 5;
@@ -128,14 +135,15 @@
 			// 
 			// pierNameTextBox
 			// 
-			this.pierNameTextBox.Location = new System.Drawing.Point(1131, 25);
+			this.pierNameTextBox.Location = new System.Drawing.Point(1131, 44);
 			this.pierNameTextBox.Name = "pierNameTextBox";
 			this.pierNameTextBox.Size = new System.Drawing.Size(141, 20);
 			this.pierNameTextBox.TabIndex = 6;
+			this.pierNameTextBox.TextChanged += new System.EventHandler(this.pierNameTextBox_TextChanged);
 			// 
 			// addPierButton
 			// 
-			this.addPierButton.Location = new System.Drawing.Point(1131, 51);
+			this.addPierButton.Location = new System.Drawing.Point(1131, 70);
 			this.addPierButton.Name = "addPierButton";
 			this.addPierButton.Size = new System.Drawing.Size(141, 23);
 			this.addPierButton.TabIndex = 7;
@@ -146,7 +154,7 @@
 			// piersListBox
 			// 
 			this.piersListBox.FormattingEnabled = true;
-			this.piersListBox.Location = new System.Drawing.Point(1131, 80);
+			this.piersListBox.Location = new System.Drawing.Point(1131, 99);
 			this.piersListBox.Name = "piersListBox";
 			this.piersListBox.Size = new System.Drawing.Size(141, 134);
 			this.piersListBox.TabIndex = 8;
@@ -154,7 +162,7 @@
 			// 
 			// removePierButton
 			// 
-			this.removePierButton.Location = new System.Drawing.Point(1131, 220);
+			this.removePierButton.Location = new System.Drawing.Point(1131, 239);
 			this.removePierButton.Name = "removePierButton";
 			this.removePierButton.Size = new System.Drawing.Size(141, 23);
 			this.removePierButton.TabIndex = 9;
@@ -172,6 +180,48 @@
 			this.createShipButton.UseVisualStyleBackColor = true;
 			this.createShipButton.Click += new System.EventHandler(this.createShipButton_Click);
 			// 
+			// menuStrip
+			// 
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.файлToolStripMenuItem});
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Size = new System.Drawing.Size(1284, 24);
+			this.menuStrip.TabIndex = 11;
+			this.menuStrip.Text = "menuStrip1";
+			// 
+			// loadFileDialog
+			// 
+			this.loadFileDialog.FileName = "loadFileDialog";
+			this.loadFileDialog.Filter = "txt file | *.txt";
+			// 
+			// файлToolStripMenuItem
+			// 
+			this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
+            this.loadToolStripMenuItem});
+			this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+			this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+			this.файлToolStripMenuItem.Text = "Файл";
+			// 
+			// saveToolStripMenuItem
+			// 
+			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.saveToolStripMenuItem.Text = "Сохранить";
+			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+			// 
+			// loadToolStripMenuItem
+			// 
+			this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+			this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.loadToolStripMenuItem.Text = "Загрузить";
+			this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+			// 
+			// saveFileDialog
+			// 
+			this.saveFileDialog.Filter = "txt file | *.txt";
+			// 
 			// FormPier
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -187,11 +237,15 @@
 			this.Controls.Add(this.parkMotorShipButton);
 			this.Controls.Add(this.parkShipButton);
 			this.Controls.Add(this.pierPictureBox);
+			this.Controls.Add(this.menuStrip);
+			this.MainMenuStrip = this.menuStrip;
 			this.Name = "FormPier";
 			this.Text = "FormPier";
 			((System.ComponentModel.ISupportInitialize)(this.pierPictureBox)).EndInit();
 			this.takeShipGroupBox.ResumeLayout(false);
 			this.takeShipGroupBox.PerformLayout();
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -212,5 +266,11 @@
         private System.Windows.Forms.ListBox piersListBox;
         private System.Windows.Forms.Button removePierButton;
         private System.Windows.Forms.Button createShipButton;
-    }
+		private System.Windows.Forms.MenuStrip menuStrip;
+		private System.Windows.Forms.OpenFileDialog loadFileDialog;
+		private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+		private System.Windows.Forms.SaveFileDialog saveFileDialog;
+	}
 }

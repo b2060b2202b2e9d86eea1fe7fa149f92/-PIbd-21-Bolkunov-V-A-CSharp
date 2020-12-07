@@ -160,5 +160,45 @@ namespace lab1_bolkunov
                 }
             }
         }
+
+        private void pierNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if(((TextBox)sender).Text.Contains(PierCollection.separator) || ((TextBox)sender).Text.Contains(Ship.separator))
+            {
+                ((TextBox)sender).Text.Replace(PierCollection.separator.ToString(),"");
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (pierCollection.SaveData(saveFileDialog.FileName))
+                {
+                    MessageBox.Show("Сохранено!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Не сохранено!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loadFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (pierCollection.LoadData(loadFileDialog.FileName))
+                {
+                    MessageBox.Show("Загружено!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ReloadPiers();
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Не загружено!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
