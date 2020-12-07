@@ -53,6 +53,7 @@
     <Compile Include="FormPier.Designer.cs">
       <DependentUpon>FormPier.cs</DependentUpon>
     </Compile>
+    <Compile Include="PierCollection.cs" />
     <Compile Include="Pier.cs" />
     <Compile Include="FormShip.cs">
       <SubType>Form</SubType>

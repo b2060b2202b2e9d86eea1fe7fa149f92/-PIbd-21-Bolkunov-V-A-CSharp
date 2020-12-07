@@ -9,7 +9,8 @@ namespace lab1_bolkunov
 {
     public class Pier<T> where T: class, ITransport
     {
-        private readonly T[] places;
+        private readonly List<T> places;
+        private int maxCount;
 
         private readonly int pictureWidth;
         private readonly int pictureHeight;
@@ -21,46 +22,42 @@ namespace lab1_bolkunov
         {
             int width = picWidth / placeSizeWidth;
             int height = picHeight / placeSizeHeight;
-            places = new T[width * height];
+            maxCount = width * height;
+            places = new List<T>();
             pictureWidth = picWidth;
             pictureHeight = picHeight;
         }
 
         public static bool operator +(Pier<T> p, T ship)
         {
-            for (int i = 0; i < p.places.Length; i++)
+            if(p.places.Count < p.maxCount)
             {
-                if(p.places[i] is null)
-                {
-                    p.places[i] = ship;
-                    int width = p.pictureWidth / p.placeSizeWidth;
-                    int height = p.pictureHeight / p.placeSizeHeight;
-                    int column = i / height;
-                    int row = i % height;
-                    ship.SetPosition(column * p.placeSizeWidth + p.placeSizeWidth/2, row * p.placeSizeHeight + p.placeSizeHeight / 2, p.pictureWidth, p.pictureHeight);
-                    return true;
-                }
+                p.places.Add(ship);
+                return true;
             }
             return false;
         }
 
         public static T operator -(Pier<T> p, int index)
         {
-            if (index >= 0 && index < p.places.Length)
+            if(index <= -1 || index >= p.places.Count)
             {
-                var res = p.places[index];
-                p.places[index] = null;
-                return res;
+                return null;
             }
-            return null;
+
+            T ship = p.places[index];
+            p.places.RemoveAt(index);
+            return ship;
         }
 
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < places.Length; i++)
+            int height = pictureHeight / placeSizeHeight;
+            for (int i = 0; i < places.Count; i++)
             {
-                places[i]?.DrawTransport(g);
+                places[i].SetPosition(i / height * placeSizeWidth + placeSizeWidth / 2, i % height * placeSizeHeight + placeSizeHeight / 2, pictureWidth, pictureHeight);
+                places[i].DrawTransport(g);
             }
         }
 
