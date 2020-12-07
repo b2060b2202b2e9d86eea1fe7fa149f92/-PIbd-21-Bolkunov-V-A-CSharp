@@ -30,19 +30,19 @@ namespace lab1_bolkunov
 
         public static bool operator +(Pier<T> p, T ship)
         {
-            if(p.places.Count < p.maxCount)
+            if(p.places.Count >= p.maxCount)
             {
-                p.places.Add(ship);
-                return true;
+                throw new PierOverflowException();
             }
-            return false;
+            p.places.Add(ship);
+            return true;
         }
 
         public static T operator -(Pier<T> p, int index)
         {
             if(index <= -1 || index >= p.places.Count)
             {
-                return null;
+                throw new PierShipNotFoundException(index);
             }
 
             T ship = p.places[index];
