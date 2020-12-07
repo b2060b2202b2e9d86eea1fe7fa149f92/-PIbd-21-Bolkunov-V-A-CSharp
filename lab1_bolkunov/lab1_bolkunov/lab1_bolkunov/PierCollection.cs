@@ -9,6 +9,7 @@ namespace lab1_bolkunov
 {
     public class PierCollection
     {
+
         public const char separator = '-';
 
         private readonly Dictionary<string, Pier<Vehicle>> piers;
@@ -55,7 +56,7 @@ namespace lab1_bolkunov
             }
         }
 
-        public bool SaveData(string filename)
+        public void SaveData(string filename)
         {
             if (File.Exists(filename))
             {
@@ -87,14 +88,13 @@ namespace lab1_bolkunov
                     }
                 }
             }
-            return true;
         }
 
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException();
             }
             using (var fs = new FileStream(filename, FileMode.Open))
             {
@@ -109,7 +109,7 @@ namespace lab1_bolkunov
                     }
                     else
                     {
-                        return false;
+                        throw new FileFormatException(filename);
                     }
                     while (!sr.EndOfStream)
                     {
@@ -132,15 +132,13 @@ namespace lab1_bolkunov
                         {
                             ship = new MotorShip(str.Split(separator)[1]);
                         }
-                        var result = piers[key] + ship;
-                        if (!result)
+                        if (!(piers[key] + ship))
                         {
-                            return false;
+                            throw new PierShipCannotBeAddedException(key);
                         }
                     }
                 }
             }
-            return true;
         }
     }
 }

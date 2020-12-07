@@ -7,17 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NLog;
 
 namespace lab1_bolkunov
 {
     public partial class FormPier : Form
     {
+        private readonly Logger logger;
+
         private readonly PierCollection pierCollection;
 
         public FormPier()
         {
             InitializeComponent();
             pierCollection = new PierCollection(pierPictureBox.Width, pierPictureBox.Height);
+            logger = LogManager.GetCurrentClassLogger();
         }
 
         private void ReloadPiers()
@@ -55,9 +59,11 @@ namespace lab1_bolkunov
             if(String.IsNullOrEmpty(pierNameTextBox.Text))
             {
                 MessageBox.Show("Введите название пристани", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logger.Warn($"Ошибка при добавлении пристани: название пристани было пустым");
             }
             else
             {
+                logger.Info($"Добавили пристань {pierNameTextBox.Text}");
                 pierCollection.AddPier(pierNameTextBox.Text);
                 ReloadPiers();
             }
@@ -69,9 +75,15 @@ namespace lab1_bolkunov
             {
                 if (MessageBox.Show($"Удалить пристань {piersListBox.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
+                    logger.Info($"Удалили пристань {pierNameTextBox.Text}");
                     pierCollection.RemovePier(pierNameTextBox.Text);
                     ReloadPiers();
                 }
+            }
+            else
+            {
+                MessageBox.Show("Не была выбрана пристань");
+                logger.Warn($"Ошибка при удалениии пристани: не была выбрана пристань");
             }
         }
 
@@ -90,8 +102,14 @@ namespace lab1_bolkunov
                     else
                     {
                         MessageBox.Show("Пристань переполнена");
+                        logger.Warn($"Ошибка при добавлении корабля на пристань: пристань переполнена");
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Не была выбрана пристань");
+                logger.Warn($"Ошибка при добавлении корабля на пристань: не была выбрана пристань");
             }
         }
 
@@ -113,9 +131,15 @@ namespace lab1_bolkunov
                         else
                         {
                             MessageBox.Show("Пристань переполнена");
+                            logger.Warn($"Ошибка при добавлении теплохода на пристань: пристань переполнена");
                         }
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Не была выбрана пристань");
+                logger.Warn($"Ошибка при добавлении теплохода на пристань: не была выбрана пристань");
             }
         }
 
@@ -123,19 +147,39 @@ namespace lab1_bolkunov
         {
             if (piersListBox.SelectedIndex > -1 && parkingPlaceMaskedTextBox.Text != "")
             {
-                var ship = pierCollection[piersListBox.SelectedItem.ToString()] - Convert.ToInt32(parkingPlaceMaskedTextBox.Text);
-                if (ship != null)
+                try
                 {
-                    var form = new FormShip();
-                    form.SetShip(ship);
-                    form.ShowDialog();
+                    var ship = pierCollection[piersListBox.SelectedItem.ToString()] - Convert.ToInt32(parkingPlaceMaskedTextBox.Text);
+                    if (ship != null)
+                    {
+                        var form = new FormShip();
+                        form.SetShip(ship);
+                        form.ShowDialog();
+                        logger.Info($"Изъят корабль {ship} с места {parkingPlaceMaskedTextBox.Text}");
+                    }
+                    Draw();
                 }
-                Draw();
+                catch (PierShipNotFoundException ex)
+                {
+                    MessageBox.Show(ex.Message, "Корабль не найден", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Ошибка при заборе корабля с пристани: корабль не найден");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Неизвестная ошибка при заборе корабля с пристани");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Не была выбрана пристань или не был указан номер корабля");
+                logger.Warn($"Ошибка при заборе корабля с пристани: не была выбрана пристань или не был указан номер корабля");
             }
         }
 
         private void PiersListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            logger.Info($"Перешли на пристань {piersListBox.SelectedItem.ToString()}");
             Draw();
         }
 
@@ -150,13 +194,28 @@ namespace lab1_bolkunov
         {
             if (ship != null && piersListBox.SelectedIndex > -1)
             {
-                if (pierCollection[piersListBox.SelectedItem.ToString()] + ship)
+                try
                 {
-                    Draw();
+                    if (pierCollection[piersListBox.SelectedItem.ToString()] + ship)
+                    {
+                        Draw();
+                        logger.Info($"Добавлен корабль {ship}");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Пристань переполнена");
+                        logger.Warn($"Ошибка при добавлении корабля на пристань: пристань переполнена");
+                    }
                 }
-                else
+                catch(PierOverflowException ex)
                 {
-                    MessageBox.Show("Пристань переполнена");
+                    MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Ошибка при добавлении корабля на пристань: пристань переполнена");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Неизвестная ошибка при добавлении корабля на пристань");
                 }
             }
         }
@@ -173,13 +232,16 @@ namespace lab1_bolkunov
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (pierCollection.SaveData(saveFileDialog.FileName))
+                try
                 {
+                    pierCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранено!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Сохранено в файл " + saveFileDialog.FileName);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранено!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Неизвестная ошибка при сохранении");
                 }
             }
         }
@@ -188,15 +250,28 @@ namespace lab1_bolkunov
         {
             if (loadFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (pierCollection.LoadData(loadFileDialog.FileName))
+                try
                 {
+                    pierCollection.LoadData(loadFileDialog.FileName);
                     MessageBox.Show("Загружено!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Загружено из файла " + loadFileDialog.FileName);
                     ReloadPiers();
                     Draw();
                 }
-                else
+                catch (PierShipCannotBeAddedException ex)
                 {
-                    MessageBox.Show("Не загружено!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Невозможно добавить корабля на причал при загрузке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Ошибка при загрузке из файла: невозможно добавить корабля на причал");
+                }
+                catch (FileFormatException ex)
+                {
+                    MessageBox.Show(ex.Message, "Неверный формат файла при загрузке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Ошибка при загрузке из файла: неверный формат файла");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при загрузке", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Неизвестная ошибка при загрузке из файла");
                 }
             }
         }
