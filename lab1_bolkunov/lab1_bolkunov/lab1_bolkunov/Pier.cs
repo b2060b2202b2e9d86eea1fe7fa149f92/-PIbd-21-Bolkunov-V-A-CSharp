@@ -73,5 +73,14 @@ namespace lab1_bolkunov
                 g.DrawLine(pen, i * placeSizeWidth, 0, i * placeSizeWidth, (pictureHeight / placeSizeHeight) * placeSizeHeight);
             }
         }
+
+        public T GetElementAt(int index)
+        {
+            if (index < 0 || index >= places.Count)
+            {
+                return null;
+            }
+            return places[index];
+        }
     }
 }

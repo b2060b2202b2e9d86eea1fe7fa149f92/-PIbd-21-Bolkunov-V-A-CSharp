@@ -34,6 +34,23 @@ namespace lab1_bolkunov
 			pipeRadius = rnd.Next(12, 16);
 		}
 
+		public MotorShip(string str):base(str)
+		{
+			string[] strs = str.Split(separator);
+			if (strs.Length == 8)
+			{
+				MaxSpeed = System.Convert.ToInt32(strs[0]);
+				Weight = System.Convert.ToInt32(strs[1]);
+				MainColor = Color.FromName(strs[2]);
+				AdditionalColor = Color.FromName(strs[3]);
+
+				AdditionalBoat = System.Convert.ToBoolean(strs[4]);
+				HelicopterPad = System.Convert.ToBoolean(strs[5]);
+				Smoke = System.Convert.ToBoolean(strs[6]);
+				Fire = System.Convert.ToBoolean(strs[7]);
+			}
+		}
+
 		public void SetAdditionalColor(Color color)
 		{
 			AdditionalColor = color;
@@ -134,6 +151,15 @@ namespace lab1_bolkunov
 					g.FillPie(fireBrush, new Rectangle((int)(posX - despertionRadius + rnd.Next(despertionRadius*2)), (int)(posY - despertionRadius + rnd.Next(despertionRadius*2)), rad, rad), (float)(rnd.NextDouble()* 360), (float)(rnd.NextDouble() * 360));
 				}
 			}
+		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}{separator}{AdditionalColor.Name}" +
+									$"{separator}{AdditionalBoat}" +
+									$"{separator}{HelicopterPad}" +
+									$"{separator}{Smoke}" +
+									$"{separator}{Fire}";
 		}
 	}
 }

@@ -245,6 +245,8 @@
 			this.previewPanel.Name = "previewPanel";
 			this.previewPanel.Size = new System.Drawing.Size(298, 202);
 			this.previewPanel.TabIndex = 3;
+			this.previewPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.previewPanel_DragDrop);
+			this.previewPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.previewPanel_DragEnter);
 			// 
 			// colorsGroupBox
 			// 
