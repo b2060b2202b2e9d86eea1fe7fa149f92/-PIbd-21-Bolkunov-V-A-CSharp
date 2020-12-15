@@ -70,8 +70,7 @@ namespace lab1_bolkunov
                     foreach (var level in piers)
                     {
                         sw.WriteLine($"Pier{separator}{level.Key}");
-                        ITransport ship = null;
-                        for (int i = 0; (ship = level.Value.GetElementAt(i)) != null; i++)
+                        foreach (ITransport ship in level.Value)
                         {
                             if (ship != null)
                             {

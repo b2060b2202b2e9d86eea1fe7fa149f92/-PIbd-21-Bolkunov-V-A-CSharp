@@ -212,7 +212,12 @@ namespace lab1_bolkunov
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     logger.Warn($"Ошибка при добавлении корабля на пристань: пристань переполнена");
                 }
-                catch(Exception ex)
+                catch (PierShipAlreadyExistsException ex)
+                {
+                    MessageBox.Show(ex.Message, "Дублирование", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn($"Ошибка при добавлении корабля на пристань: такой корабль уже существует");
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     logger.Warn($"Неизвестная ошибка при добавлении корабля на пристань");
@@ -273,6 +278,16 @@ namespace lab1_bolkunov
                     MessageBox.Show(ex.Message, "Неизвестная ошибка при загрузке", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     logger.Warn($"Неизвестная ошибка при загрузке из файла");
                 }
+            }
+        }
+
+        private void SortButton_Click(object sender, EventArgs e)
+        {
+            if (piersListBox.SelectedIndex > -1)
+            {
+                pierCollection[piersListBox.SelectedItem.ToString()].Sort();
+                Draw();
+                logger.Info("Сортировка уровней");
             }
         }
     }

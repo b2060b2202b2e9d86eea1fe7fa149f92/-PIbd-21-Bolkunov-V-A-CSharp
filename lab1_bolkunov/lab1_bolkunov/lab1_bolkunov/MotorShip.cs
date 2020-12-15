@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace lab1_bolkunov
 {
-	public class MotorShip : Ship
+	public class MotorShip : Ship, IEquatable<MotorShip>
 	{
 		public Color AdditionalColor { private set; get; }
 
@@ -153,7 +153,27 @@ namespace lab1_bolkunov
 			}
 		}
 
-		public override string ToString()
+        public bool Equals(MotorShip ship)
+        {
+            if (!((Ship)ship).Equals(this) || 
+				AdditionalColor != ship.AdditionalColor || AdditionalBoat != ship.AdditionalBoat ||
+                Fire != ship.Fire || HelicopterPad != ship.HelicopterPad || Smoke != ship.Smoke)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null || !(obj is MotorShip ship))
+            {
+                return false;
+            }
+            return Equals(ship);
+        }
+
+        public override string ToString()
 		{
 			return $"{base.ToString()}{separator}{AdditionalColor.Name}" +
 									$"{separator}{AdditionalBoat}" +

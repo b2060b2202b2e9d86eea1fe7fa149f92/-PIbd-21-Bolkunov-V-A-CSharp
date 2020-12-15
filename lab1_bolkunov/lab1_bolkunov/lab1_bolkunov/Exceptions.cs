@@ -30,4 +30,9 @@ namespace lab1_bolkunov
         { }
     }
 
+    public class PierShipAlreadyExistsException : Exception
+    {
+        public PierShipAlreadyExistsException() : base("На причале уже существует такой корабль")
+        { }
+    }
 }
