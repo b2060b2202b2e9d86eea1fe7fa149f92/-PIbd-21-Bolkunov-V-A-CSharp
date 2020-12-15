@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace lab1_bolkunov
 {
-	public class Ship: Vehicle
+	public class Ship: Vehicle, IEquatable<Ship>
 	{
 		public const char separator = '|';
 		
@@ -126,7 +126,26 @@ namespace lab1_bolkunov
 
 		}
 
-		public override string ToString()
+        public bool Equals(Ship ship)
+        {
+            if(ship == null || GetType().Name != ship.GetType().Name || Weight != ship.Weight ||
+                MaxSpeed != ship.MaxSpeed || MainColor != ship.MainColor)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is null || !(obj is Ship ship))
+            {
+                return false;
+            }
+            return Equals(ship);
+        }
+
+        public override string ToString()
 		{
 			return $"{MaxSpeed}{separator}{Weight}{separator}{MainColor.Name}";
 		}

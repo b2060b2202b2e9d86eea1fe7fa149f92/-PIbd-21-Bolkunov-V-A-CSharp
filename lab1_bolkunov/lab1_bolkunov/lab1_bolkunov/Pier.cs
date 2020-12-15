@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace lab1_bolkunov
 {
-    public class Pier<T> where T: class, ITransport
+    public class Pier<T> : IEnumerable<T>, IEnumerator<T> where T: class, ITransport
     {
         private readonly List<T> places;
         private int maxCount;
@@ -18,6 +19,10 @@ namespace lab1_bolkunov
         private readonly int placeSizeWidth = 350;
         private readonly int placeSizeHeight = 100;
 
+        private int currentIndex;
+        object IEnumerator.Current => places[currentIndex];
+        public T Current => places[currentIndex];
+
         public Pier(int picWidth, int picHeight)
         {
             int width = picWidth / placeSizeWidth;
@@ -26,6 +31,7 @@ namespace lab1_bolkunov
             places = new List<T>();
             pictureWidth = picWidth;
             pictureHeight = picHeight;
+            currentIndex = -1;
         }
 
         public static bool operator +(Pier<T> p, T ship)
@@ -34,6 +40,11 @@ namespace lab1_bolkunov
             {
                 throw new PierOverflowException();
             }
+            if (p.places.Contains(ship))
+            {
+                throw new PierShipAlreadyExistsException();
+            }
+
             p.places.Add(ship);
             return true;
         }
@@ -81,6 +92,35 @@ namespace lab1_bolkunov
                 return null;
             }
             return places[index];
+        }
+
+        public void Sort() => places.Sort((IComparer<T>)new ShipComparer());
+
+        public void Dispose() { }
+
+        public bool MoveNext()
+        {
+            if(currentIndex < places.Count - 1)
+            {
+                currentIndex++;
+                return true;
+            }
+            return false;
+        }
+
+        public void Reset()
+        {
+            currentIndex = -1;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this;
         }
     }
 }
